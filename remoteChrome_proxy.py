@@ -15,39 +15,25 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 # Danh sách user agent cho iPhone
 IPHONE_USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+    #User agent
 ]
 
 # Danh sách proxy
 PROXY_LIST = [
-    "45.251.61.175:6893:fnrbjjbf:smfqbs91u00f",
-    "216.173.74.150:5830:fnrbjjbf:smfqbs91u00f",
-    "193.42.224.108:6309:fnrbjjbf:smfqbs91u00f",
-    "206.41.175.159:6372:fnrbjjbf:smfqbs91u00f",
-    "171.22.249.177:5757:fnrbjjbf:smfqbs91u00f",
-    "171.22.249.110:5690:fnrbjjbf:smfqbs91u00f",
-    "206.41.175.224:6437:fnrbjjbf:smfqbs91u00f",
-    "216.173.74.136:5816:fnrbjjbf:smfqbs91u00f"
+    #Proxy
 ]
 
 def get_nameFolder():
     folder_path = "D:\\Tdata_run\\Alltdata\\Tdata_1"
     subfolders = [f.name for f in os.scandir(folder_path) if f.is_dir()]
     return subfolders
-
+#Tạo profile chrome
 def create_profile():
     for name in get_nameFolder():
         profile_dir = os.path.join(os.getcwd(), "D:\\Tdata_run\\AllProfile\\Profile_1", name)
         if not os.path.exists(profile_dir):
             os.makedirs(profile_dir)
-
+#Thiết lập Proxy
 def get_plugin(proxy_host, proxy_port, proxy_user, proxy_pass, profile_name):
     manifest_json = """
     {
@@ -119,6 +105,7 @@ def run_profile(name, user_agent, proxy):
     proxy_port = proxy_parts[1]
     proxy_user = proxy_parts[2]
     proxy_pass = proxy_parts[3]
+    #Thêm extension
     extensions = [
         #"Extention/bypass.crx",
         "Extention/Ignore-X-Frame-headers.crx",
@@ -142,7 +129,7 @@ def run_profile(name, user_agent, proxy):
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     driver.set_window_size(300, 700)
-
+    #Đọc link từ file
     with open('refGame_noquery\linkref.txt', 'r') as file:
         lines = file.readlines()
 
